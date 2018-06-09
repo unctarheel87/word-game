@@ -66,6 +66,8 @@ document.addEventListener('keypress', (event) => {
 
   if(wordPickArr.join() === correctResponses.join()) {
     alert("You win!")
+  } else if(wrongLetter.length === 7) {
+    alert("You Lose")
   }
 });
 
