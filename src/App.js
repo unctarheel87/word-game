@@ -24,15 +24,17 @@ class Word extends Component {
 }
 
 const wordPick = wordBank.words[1].book.toLowerCase();
-const wordPickArr = wordPick.split('')
+const wordPickArr = wordPick.split('');
 const correctResponses = [];
+const wrongLetter = [];
 
 for(let i = 0; i < wordPickArr.length; i++) {
   wordPickArr[i] === ' ' ? correctResponses.push(' ') : correctResponses.push('_')
 }
     super(props)
     this.state = {
-      wordLogic: correctResponses
+      wordLogic: correctResponses,
+      wrongLetter:[]
     }
 
 document.addEventListener('keypress', (event) => {
@@ -48,9 +50,14 @@ document.addEventListener('keypress', (event) => {
       correctResponses.splice(duplicates[i], 1, keyName);
   }
   
+  if(wordPickArr.indexOf(keyName) === -1 && wrongLetter.includes(keyName) === false) {
+    wrongLetter.push(keyName)
+  }
+  
   this.setState((prevState) => {
     return {
-      wordLogic: correctResponses
+      wordLogic: correctResponses,
+      wrongLetter: wrongLetter
     }
   })
   
@@ -70,6 +77,7 @@ render() {
        {this.state.wordLogic.map((letter) => {
          return <p>{letter}</p>
        })}
+       <h2>{this.state.wrongLetter}</h2>
       </div>
     );
   }
